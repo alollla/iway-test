@@ -20,6 +20,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://transstage1.iwayex.com/transnextgen',
+        // auth: 'testUser:qwezxc',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

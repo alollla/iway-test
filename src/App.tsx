@@ -1,17 +1,13 @@
 import {
   Routes,
   Route,
-  Outlet,
-  Navigate,
-  useLocation
 } from "react-router-dom";
 
 import './App.scss';
 import HomePage from "@/pages/Home";
 import LoginPage from "@/pages/Login";
-// import TripDetails from "@/pages/Trip";
-import { store } from "@/store";
-import { isAuth } from "@/store/authSlice";
+import Layout from "@/components/Layout";
+import RequireAuth from "@/components/RequireAuth";
 
 function App() {
   return (
@@ -26,24 +22,6 @@ function App() {
       </Route>
     </Routes>
   )
-}
-
-function RequireAuth({ children }: { children: JSX.Element }) {
-  const location = useLocation();
-
-  if (!isAuth(store.getState())) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  return children;
-}
-
-function Layout() {
-  return (
-    <div>
-      <Outlet />
-    </div>
-  );
 }
 
 export default App
