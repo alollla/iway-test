@@ -1,6 +1,43 @@
+$headerHeight: 2rem;
+$maxContentWidth: 1280px;
+
 #root {
-  max-width: 1280px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  flex-shrink: 0;
+  padding: 0.5rem;
+  border-bottom: solid 1px #d9d9d9;
+
+  & > div {
+    max-width: $maxContentWidth;
+    margin: auto;
+  }
+}
+
+main {
+  max-width: $maxContentWidth;
+  width: 100%;
+  height: calc(100dvh - $headerHeight);
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+}
+
+.login-form-wrap {
+  margin: auto;
+}
+
+.filters {
+  padding: 16px;
+}
+
+.trips-list {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1rem 1rem;
+  overflow: hidden auto;
 }

@@ -3,9 +3,16 @@ import { Outlet } from "react-router-dom"
 
 const Layout: React.FC = () => {
     return (
-        <div>
-            <Outlet />
-        </div>
+        <>
+            <header>
+                <div>
+                    <strong>I'Way</strong>
+                </div>
+            </header>
+            <main>
+                <Outlet />
+            </main>
+        </>
     )
 }
 

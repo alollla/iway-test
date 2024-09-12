@@ -9,7 +9,7 @@ export const api = createApi({
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token
             if (token) {
-                headers.set('Authentification', `Bearer ${token}`)
+                headers.set('Authorization', `Bearer ${token}`)
             }
             return headers
         },
@@ -24,9 +24,12 @@ export const api = createApi({
         }),
         getTrips: builder.query({
             query: (params) => {
-                const searchParams  = new URLSearchParams(window.location.search)
-                searchParams.set("foo", "bar")
-                console.log(searchParams)
+                const searchParams = new URLSearchParams(window.location.search)
+                for (let p in params) {
+                    if(params[p] !== undefined) {
+                        searchParams.set(p, params[p])
+                    }
+                }
 
                 return {
                     url: `orders/trips${params ? `?${searchParams}` : ''}`,

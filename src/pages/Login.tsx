@@ -6,57 +6,60 @@ import type { LoginFormType } from '@/types';
 import { useAuthMutation } from '@/api';
 import { setCredentials } from '@/store/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const LoginPage: React.FC = () => {
     const [auth, { error }] = useAuthMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onFinish: FormProps<LoginFormType>['onFinish'] = (values) => {
         auth(values)
-            .then(response => {
-                console.log(response)
-                if (!response.error) {
-                    setCredentials({ token: response.data.result.token });
-                    navigate('/')
+            .then(({ data }) => {
+                if (!data.error) {
+                    dispatch(setCredentials({ token: data.result.token }));
+                    navigate('/');
                 }
             })
     }
 
     return (
-        <Form
-            name="auth"
-            colon={false}
-            requiredMark={false}
-            layout='vertical'
-            style={{ maxWidth: 300 }}
-            initialValues={{ login: 'testUser', password: 'qwezxc' }}
-            onFinish={onFinish}
-            autoComplete="off"
-        >
-            <Form.Item<LoginFormType>
-                label="Login"
-                name="login"
-                rules={[{ required: true, message: 'Please input your login!' }]}
+        <div className='login-form-wrap'>
+            <Form
+                name="auth"
+                colon={false}
+                requiredMark={false}
+                layout='vertical'
+                style={{ maxWidth: 300 }}
+                initialValues={{ login: 'test__user', password: 'qwezxc' }}
+                onFinish={onFinish}
+                autoComplete="off"
             >
-                <Input />
-            </Form.Item>
+                <Form.Item<LoginFormType>
+                    label="Логин"
+                    name="login"
+                    rules={[{ required: true, message: 'Введите логин' }]}
+                >
+                    <Input />
+                </Form.Item>
 
-            <Form.Item<LoginFormType>
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input.Password />
-            </Form.Item>
+                <Form.Item<LoginFormType>
+                    label="Пароль"
+                    name="password"
+                    rules={[{ required: true, message: 'Введите пароль' }]}
+                >
+                    <Input.Password />
+                </Form.Item>
 
-            <Form.Item>
-                <Button type="primary" htmlType="submit" block>
-                    Submit
-                </Button>
-            </Form.Item>
-            {/* @ts-ignore */}
-            {error?.data?.error ? <Typography.Text type="danger">{error.data.error.message}</Typography.Text> : null}
-        </Form>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" block>
+                        Войти
+                    </Button>
+                </Form.Item>
+                {/* @ts-ignore */}
+                {error?.data?.error ? <Typography.Text type="danger">{error.data.error.message}</Typography.Text> : null}
+            </Form>
+        </div>
     )
 }
 
