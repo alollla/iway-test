@@ -31,7 +31,6 @@ const LoginPage: React.FC = () => {
                 requiredMark={false}
                 layout='vertical'
                 style={{ maxWidth: 300 }}
-                initialValues={{ login: 'test__user', password: 'qwezxc' }}
                 onFinish={onFinish}
                 autoComplete="off"
             >
